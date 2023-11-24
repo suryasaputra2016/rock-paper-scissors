@@ -56,6 +56,7 @@ function getPlayerChoice() {
 // 3. return the string according to step 2
 
 function playSingleRound(playerSelection, computerSelection) {
+        
     let gameStatus = "draw";
 
     if (playerSelection !== computerSelection) {
@@ -80,6 +81,78 @@ function playSingleRound(playerSelection, computerSelection) {
             return `It's a draw. You both choose ${playerSelection}.`
     }
 }
+
+
+let gameCounter = 0;
+let win = 0;
+let draw = 0;
+
+let endResult = ""
+
+const rock = document.querySelector('.rock');
+const paper = document.querySelector('.paper');
+const scissors = document.querySelector('.scissors');
+
+const gameDisplay = document.querySelector(".game-display");
+const resultDisplay = document.querySelector(".result-display");
+const endDisplay = document.querySelector(".end-display");
+
+gameDisplay.textContent = `Number of game: ${gameCounter}`;
+
+
+rock.addEventListener('click', clickToPlay);
+paper.addEventListener('click', clickToPlay);
+scissors.addEventListener('click', clickToPlay);
+
+function clickToPlay(event) {
+    result = playSingleRound(event.target.value, getComputerChoice());
+    gameCounter++;
+    gameDisplay.textContent = `Number of game: ${gameCounter}`;
+    resultDisplay.textContent = result;
+
+    if(result.includes("win")) {
+        win++;
+    } else if(result.includes("draw")) {
+        draw++
+    }
+    endDisplay.textContent = `win: ${win}, draw: ${draw}, lose: ${gameCounter - win - draw}`;
+
+    if(gameCounter>=5) {
+        if(win > gameCounter - win - draw) {
+            endResult = "You win the game."
+        } else if(win === gameCounter - win - draw) {
+            endResult =  "The game is a draw."
+        } else {
+            endResult =  "You lose the game."
+        }
+
+        alert(`${endResult}\nYou have ${win} win, ${draw} draw, and ${gameCounter - win - draw} lose.`) ;
+
+        gameCounter = 0;
+        win = 0;
+        draw = 0;
+        gameDisplay.textContent = `Number of game: ${gameCounter}`;
+        resultDisplay.textContent = "";
+        endDisplay.textContent = "";
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // play game
